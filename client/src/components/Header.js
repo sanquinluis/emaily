@@ -7,24 +7,28 @@ class Header extends Component {
   renderContent() {
     switch (this.props.auth) {
       case null:
-        return 'Loading...';
+        return;
       case false:
         return (
           <li>
-            <a href="/auth/google">Login with Google</a>
+            <a href="/auth/google">Login With Google</a>
           </li>
         );
       default:
         return [
-          <li>
+          <li key="1">
             <Payments />
           </li>,
-          <li>
+          <li key="3" style={{ margin: '0 10px' }}>
+            Credits: {this.props.auth.credits}
+          </li>,
+          <li key="2">
             <a href="/api/logout">Logout</a>
           </li>,
         ];
     }
   }
+
   render() {
     return (
       <nav>
@@ -35,10 +39,7 @@ class Header extends Component {
           >
             Emaily
           </Link>
-
-          <ul id="nav-mobile" className="right">
-            {this.renderContent()}
-          </ul>
+          <ul className="right">{this.renderContent()}</ul>
         </div>
       </nav>
     );
@@ -48,4 +49,5 @@ class Header extends Component {
 function mapStateToProps({ auth }) {
   return { auth };
 }
+
 export default connect(mapStateToProps)(Header);
